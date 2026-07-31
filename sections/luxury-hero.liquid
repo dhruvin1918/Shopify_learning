@@ -1,52 +1,57 @@
 {% stylesheet %}
-.luxury-hero{
-  position:relative;
-  min-height:90vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-.luxury-hero__media{
-  position:absolute;
-  inset:0;
-}
-.luxury-hero__media img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-.luxury-hero__overlay{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }});
-}
-.luxury-hero__content{
-  position:relative;
-  z-index:2;
-  max-width:900px;
-  padding:2rem;
-  text-align:{{ section.settings.text_alignment }};
-  color:#fff;
-}
-.luxury-hero__content h1{
-  font-size:clamp(3rem,7vw,6rem);
-  margin-bottom:1rem;
-}
-.luxury-btn{
-  display:inline-block;
-  margin:.5rem;
-  padding:1rem 2.5rem;
-  text-decoration:none;
-  text-transform:uppercase;
-  background:#fff;
-  color:#111;
-}
-.luxury-btn.secondary{
-  background:transparent;
-  border:1px solid #fff;
-  color:#fff;
-}
+    .luxury-hero{
+      position:relative;
+      min-height:90vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .luxury-hero__media{
+      position:absolute;
+      inset:0;
+    }
+    .luxury-hero__media img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+    }
+    .luxury-hero__overlay{
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,{{ section.settings.overlay_opacity | divided_by: 100.0 }});
+    }
+    .luxury-hero__content{
+      position:relative;
+      z-index:2;
+      max-width:900px;
+      padding:2rem;
+      text-align:{{ section.settings.text_alignment }};
+      color:#fff;
+    }
+    .luxury-title{
+      font-size: clamp(4rem,8vw,7rem);
+      color:#ffffff;
+      font-weight:600;
+      line-height:0.9;
+      letter-spacing:-3px;
+      margin-bottom:25px;
+      text-shadow:0 8px 25px rgba(0,0,0,.55);
+  }
+    .luxury-btn{
+      display:inline-block;
+      margin:.5rem;
+      padding:1rem 2.5rem;
+      text-decoration:none;
+      text-transform:uppercase;
+      background:#fff;
+      color:#111;
+    }
+    .luxury-btn.secondary{
+      background:transparent;
+      border:1px solid #fff;
+      color:#fff;
+    }
 {% endstylesheet %}
 
 <section class="luxury-hero">
@@ -61,7 +66,9 @@
   <div class="luxury-hero__overlay"></div>
 
   <div class="luxury-hero__content">
-    <h1>{{ section.settings.heading }}</h1>
+    <h1 class="luxury-title">
+      {{ section.settings.heading }}
+    </h1>
     <div>{{ section.settings.text }}</div>
 
     {% if section.settings.button_label != blank %}
@@ -80,22 +87,42 @@
 
 {% schema %}
 {
-  "name":"Luxury Hero",
-  "tag":"section",
-  "settings":[
-    {"type":"image_picker","id":"image","label":"Background image"},
-    {"type":"range","id":"overlay_opacity","label":"Overlay opacity","min":0,"max":90,"step":5,"default":40},
-    {"type":"text","id":"heading","label":"Heading","default":"Crafted for Every Step"},
-    {"type":"richtext","id":"text","label":"Text","default":"<p>Timeless footwear with premium craftsmanship.</p>"},
-    {"type":"select","id":"text_alignment","label":"Text alignment","default":"center","options":[
-      {"value":"left","label":"Left"},
-      {"value":"center","label":"Center"},
-      {"value":"right","label":"Right"}]},
-    {"type":"text","id":"button_label","label":"Primary button","default":"Shop Now"},
-    {"type":"url","id":"button_link","label":"Primary link"},
-    {"type":"text","id":"button2_label","label":"Secondary button","default":"Explore"},
-    {"type":"url","id":"button2_link","label":"Secondary link"}
+  "name": "Luxury Hero",
+  "tag": "section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 90,
+      "step": 5,
+      "default": 40
+    },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Crafted for Every Step" },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Timeless footwear with premium craftsmanship.</p>"
+    },
+    {
+      "type": "select",
+      "id": "text_alignment",
+      "label": "Text alignment",
+      "default": "center",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ]
+    },
+    { "type": "text", "id": "button_label", "label": "Primary button", "default": "Shop Now" },
+    { "type": "url", "id": "button_link", "label": "Primary link" },
+    { "type": "text", "id": "button2_label", "label": "Secondary button", "default": "Explore" },
+    { "type": "url", "id": "button2_link", "label": "Secondary link" }
   ],
-  "presets":[{"name":"Luxury Hero"}]
+  "presets": [{ "name": "Luxury Hero" }]
 }
 {% endschema %}
