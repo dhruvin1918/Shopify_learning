@@ -1,0 +1,126 @@
+/* ==========================================================================
+   LUXURY SHOE THEME — Dawn override
+   Add this file as: assets/custom-luxury.css
+   Then include it in layout/theme.liquid, right after base.css loads:
+
+   {{ 'custom-luxury.css' | asset_url | stylesheet_tag }}
+
+   This does NOT replace base.css — it overrides Dawn's CSS custom
+   properties, so it must load AFTER base.css in theme.liquid.
+   ========================================================================== */
+
+:root {
+  /* ---- COLOR ---------------------------------------------------------- */
+  /* Dawn's default scheme vars — override the root-level ones here.
+     You'll also want to set these per-scheme in Theme Editor > Colors
+     (Settings > Colors), this just sets sane global fallbacks. */
+
+  --color-base-text: 26, 26, 26;              /* #1a1a1a charcoal, not pure black */
+  --color-base-background-1: 250, 249, 247;   /* #faf9f7 bone/off-white */
+  --color-base-background-2: 244, 241, 236;   /* #f4f1ec slightly deeper bone, for alt sections */
+
+  --color-base-accent-1: 122, 92, 62;         /* #7a5c3e leather brown */
+  --color-base-accent-2: 90, 30, 40;          /* #5a1e28 muted burgundy, sparing use */
+
+  --color-base-outline-button-labels: 26, 26, 26;
+  --color-base-solid-button-labels: 250, 249, 247;
+
+  --color-shadow: 26, 26, 26;
+  --color-link: 122, 92, 62;
+
+  /* ---- TYPOGRAPHY ------------------------------------------------------
+     Set these to match whatever you choose in Theme Editor > Typography.
+     Recommended pairing for luxury footwear:
+     Heading: Fraunces (light weight, wide-ish tracking on small labels)
+     Body:    Inter or Assistant (Dawn default), regular weight */
+
+  --font-heading-family: "Fraunces", serif;
+  --font-heading-style: normal;
+  --font-heading-weight: 400;   /* keep light — luxury headlines are rarely bold */
+
+  --font-body-family: "Inter", sans-serif;
+  --font-body-style: normal;
+  --font-body-weight: 400;
+  --font-body-weight-bold: 500; /* Dawn defaults to 700 — too heavy for this look */
+
+  /* ---- SPACING SCALE -----------------------------------------------------
+     Dawn's section padding vars. Roughly 1.5–2x Dawn's defaults. */
+
+  --spacing-sections-desktop: 100;   /* Dawn default: 36–52 depending on section */
+  --spacing-sections-mobile: 60;     /* Dawn default: 28–36 */
+
+  --page-width: 1400px;              /* Dawn default: 1200px — a bit more room to breathe */
+  --page-width-margin: 6rem;
+}
+
+/* ---- GLOBAL TYPE ADJUSTMENTS ------------------------------------------- */
+
+body {
+  line-height: 1.65;             /* Dawn default ~1.4 — luxury body copy reads looser */
+  letter-spacing: 0.01em;
+}
+
+h1, h2, h3,
+.h1, .h2, .h3 {
+  font-weight: 400;
+  letter-spacing: -0.01em;       /* tight tracking on large serif headings */
+  line-height: 1.1;
+}
+
+/* Small labels / eyebrows — tracked-out caps, classic luxury signal */
+.eyebrow,
+.product__text.caption,
+.collection-hero__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgb(var(--color-base-accent-1));
+}
+
+/* ---- SPACING / LAYOUT --------------------------------------------------- */
+
+/* Widen gaps on collection & featured product grids */
+.grid {
+  --grid-desktop-horizontal-spacing: 32px;   /* Dawn default: 8–16px */
+  --grid-desktop-vertical-spacing: 48px;
+}
+
+/* Cap products-per-row visually wider so items feel less crowded */
+@media screen and (min-width: 990px) {
+  .grid--4-col-desktop > .grid__item {
+    width: calc(33.33% - var(--grid-desktop-horizontal-spacing) * 2 / 3);
+  }
+}
+
+/* Buttons — remove Dawn's heavier default weight/radius for a quieter feel */
+.button,
+.shopify-payment-button__button {
+  border-radius: 0;              /* sharp corners read more premium than pill/rounded */
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding-left: 2.25rem;
+  padding-right: 2.25rem;
+}
+
+/* Product card — reduce visual noise, let whitespace + image do the work */
+.card {
+  border: none;
+  box-shadow: none;
+}
+
+.card__information {
+  padding-top: 1.25rem;
+}
+
+.card__heading {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.price {
+  font-weight: 400;
+  color: rgba(var(--color-base-text), 0.75);
+}
