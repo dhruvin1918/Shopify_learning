@@ -9,43 +9,19 @@
  */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Okay",
-            "heading_size": "h0"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "button"
-      ],
+    "luxury_hero_LahD7H": {
+      "type": "luxury-hero",
+      "name": "Luxury Hero",
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "image_behavior": "none",
-        "desktop_content_position": "bottom-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
+        "image": "shopify://shop_images/3iYxyXcQGXNisqz9aazjdOQz2e-ieN4l7oalD3wOQ_6fVjOhHyvYcNV5vDwYDcNxjbYoNr2HgMLpu4E5pzOYMrJlo1vTZO08eWf5KoBrxwydZicAUG3fZu5idb8BUTjkrE5szZmqm1yAOywqOBV9WXLs11xtUKOXJq6GZPty1l6dVuq0zElD8Vb.jpg",
+        "overlay_opacity": 55,
+        "heading": "Luxury in Every Step",
+        "text": "<p>Discover handcrafted leather footwear designed for timeless elegance, exceptional comfort, and everyday confidence.</p>",
+        "text_alignment": "left",
+        "button_label": "Shop Collection",
+        "button_link": "",
+        "button2_label": "Our Story",
+        "button2_link": ""
       }
     },
     "featured_collection": {
@@ -78,7 +54,7 @@
     }
   },
   "order": [
-    "image_banner",
+    "luxury_hero_LahD7H",
     "featured_collection"
   ]
 }
