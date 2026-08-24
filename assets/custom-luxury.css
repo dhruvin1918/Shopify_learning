@@ -1,533 +1,368 @@
+/* ==========================================================================
+   LUXURY SHOE THEME — Dawn override
+   Add this file as: assets/custom-luxury.css
+   Then include it in layout/theme.liquid, right after base.css loads:
 
-/*!
- * Luxury Theme Override for Shopify Dawn 15.5+
- * Author: ChatGPT
- * Replace assets/custom-luxury.css with this file.
- */
+   {{ 'custom-luxury.css' | asset_url | stylesheet_tag }}
 
-/* =======================
-   IMPORT
-======================= */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap');
+   This does NOT replace base.css — it overrides Dawn's CSS custom
+   properties, so it must load AFTER base.css in theme.liquid.
+   ========================================================================== */
 
-/* =======================
-   ROOT
-======================= */
-:root{
-  --lux-bg:#faf8f4;
-  --lux-bg-2:#f3eee7;
-  --lux-text:#222;
-  --lux-muted:#666;
-  --lux-brown:#7a5c3e;
-  --lux-gold:#b08d57;
-  --lux-border:#e8e0d6;
-  --lux-shadow:0 10px 30px rgba(0,0,0,.08);
+:root {
+  /* ---- COLOR ---------------------------------------------------------- */
+  /* Dawn's default scheme vars — override the root-level ones here.
+     You'll also want to set these per-scheme in Theme Editor > Colors
+     (Settings > Colors), this just sets sane global fallbacks. */
+
+  --color-base-text: 26, 26, 26;              /* #1a1a1a charcoal, not pure black */
+  --color-base-background-1: 250, 249, 247;   /* #faf9f7 bone/off-white */
+  --color-base-background-2: 244, 241, 236;   /* #f4f1ec slightly deeper bone, for alt sections */
+
+  --color-base-accent-1: 122, 92, 62;         /* #7a5c3e leather brown */
+  --color-base-accent-2: 90, 30, 40;          /* #5a1e28 muted burgundy, sparing use */
+
+  --color-base-outline-button-labels: 26, 26, 26;
+  --color-base-solid-button-labels: 250, 249, 247;
+
+  --color-shadow: 26, 26, 26;
+  --color-link: 122, 92, 62;
+
+  /* ---- TYPOGRAPHY ------------------------------------------------------
+     Set these to match whatever you choose in Theme Editor > Typography.
+     Recommended pairing for luxury footwear:
+     Heading: Fraunces (light weight, wide-ish tracking on small labels)
+     Body:    Inter or Assistant (Dawn default), regular weight */
+
+  --font-heading-family: "Fraunces", serif;
+  --font-heading-style: normal;
+  --font-heading-weight: 400;   /* keep light — luxury headlines are rarely bold */
+
+  --font-body-family: "Inter", sans-serif;
+  --font-body-style: normal;
+  --font-body-weight: 400;
+  --font-body-weight-bold: 500; /* Dawn defaults to 700 — too heavy for this look */
+
+  /* ---- SPACING SCALE -----------------------------------------------------
+     Dawn's section padding vars. Roughly 1.5–2x Dawn's defaults. */
+
+  --spacing-sections-desktop: 100;   /* Dawn default: 36–52 depending on section */
+  --spacing-sections-mobile: 60;     /* Dawn default: 28–36 */
+
+  --page-width: 1400px;              /* Dawn default: 1200px — a bit more room to breathe */
+  --page-width-margin: 6rem;
 }
 
-html{scroll-behavior:smooth;}
-body{
-  background:var(--lux-bg)!important;
-  color:var(--lux-text)!important;
-  font-family:Inter,sans-serif!important;
-  line-height:1.75;
-  letter-spacing:.01em;
+/* ---- GLOBAL TYPE ADJUSTMENTS ------------------------------------------- */
+
+body {
+  line-height: 1.65;             /* Dawn default ~1.4 — luxury body copy reads looser */
+  letter-spacing: 0.01em;
 }
 
-h1,h2,h3,h4,h5,h6,
-.h0,.h1,.h2,.h3{
-  font-family:"Cormorant Garamond",serif!important;
-  font-weight:500!important;
-  letter-spacing:-.02em;
-  color:#171717;
+h1, h2, h3,
+.h1, .h2, .h3 {
+  font-weight: 400;
+  letter-spacing: -0.01em;       /* tight tracking on large serif headings */
+  line-height: 1.1;
 }
 
-/* Announcement */
-.utility-bar{
-  background:#111!important;
-  color:#fff!important;
-  letter-spacing:.12em;
-  text-transform:uppercase;
+/* Small labels / eyebrows — tracked-out caps, classic luxury signal */
+.eyebrow,
+.product__text.caption,
+.collection-hero__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgb(var(--color-base-accent-1));
 }
 
-/* Header */
-.header-wrapper{
-  background:rgba(250,248,244,.96)!important;
-  backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--lux-border);
-}
-.header__heading-link,
-.header__menu-item{
-  color:#222!important;
-}
-.header__menu-item:hover{
-  color:var(--lux-brown)!important;
+/* ---- SPACING / LAYOUT --------------------------------------------------- */
+
+/* Widen gaps on collection & featured product grids */
+.grid {
+  --grid-desktop-horizontal-spacing: 32px;   /* Dawn default: 8–16px */
+  --grid-desktop-vertical-spacing: 48px;
 }
 
-/* Buttons */
+/* Cap products-per-row visually wider so items feel less crowded */
+@media screen and (min-width: 990px) {
+  .grid--4-col-desktop > .grid__item {
+    width: calc(33.33% - var(--grid-desktop-horizontal-spacing) * 2 / 3);
+  }
+}
+
+/* Buttons — remove Dawn's heavier default weight/radius for a quieter feel */
 .button,
-.shopify-payment-button__button,
-button{
-  border-radius:0!important;
-  text-transform:uppercase;
-  letter-spacing:.12em;
-  font-size:.82rem;
-  padding:.9rem 2.2rem;
-  background:#222!important;
-  color:#fff!important;
-  transition:.3s;
-}
-.button:hover,
-.shopify-payment-button__button:hover{
-  background:var(--lux-brown)!important;
-  transform:translateY(-2px);
+.shopify-payment-button__button {
+  border-radius: 0;              /* sharp corners read more premium than pill/rounded */
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding-left: 2.25rem;
+  padding-right: 2.25rem;
 }
 
-/* Banner */
-.banner__box{
-  background:rgba(255,255,255,.82)!important;
-  backdrop-filter:blur(12px);
-  padding:3rem!important;
-  border:1px solid rgba(255,255,255,.5);
-}
-.banner__heading{
-  font-size:clamp(3rem,6vw,5rem)!important;
-}
-.banner__text{
-  max-width:42rem;
+/* Product card — reduce visual noise, let whitespace + image do the work */
+.card {
+  border: none;
+  box-shadow: none;
 }
 
-/* Cards */
-.card-wrapper{
-  transition:.35s;
-}
-.card{
-  border:none!important;
-  background:#fff;
-  box-shadow:var(--lux-shadow);
-}
-.card:hover{
-  transform:translateY(-8px);
-}
-.card__information{
-  padding:1.4rem!important;
-}
-.card__heading{
-  font-family:"Cormorant Garamond",serif!important;
-  font-size:1.6rem!important;
-}
-.price{
-  color:var(--lux-brown)!important;
-  font-weight:600!important;
+.card__information {
+  padding-top: 1.25rem;
 }
 
-/* Product */
-.product__title{
-  font-size:3rem!important;
-}
-.product__description{
-  color:var(--lux-muted);
-}
-.product-form__submit{
-  width:100%;
+.card__heading {
+  font-size: 1rem;
+  font-weight: 400;
 }
 
-/* Collections */
-.collection-hero{
-  background:var(--lux-bg-2);
-  padding:5rem 0;
+.price {
+  font-weight: 400;
+  color: rgba(var(--color-base-text), 0.75);
 }
 
-/* Inputs */
-input,
-textarea,
-select{
-  border-radius:0!important;
-  border:1px solid var(--lux-border)!important;
-}
-input:focus,
-textarea:focus{
-  border-color:var(--lux-brown)!important;
-  box-shadow:none!important;
+/* ---- HEADER / NAV -------------------------------------------------------
+   Dawn's nav links default to plain body-font weight. Bring them in line
+   with the tracked-out label treatment used elsewhere on the page. */
+
+.header__inline-menu .header__menu-item {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
-/* Cart */
-.cart-drawer,
-.drawer{
-  background:var(--lux-bg)!important;
+.header__inline-menu .header__menu-item span {
+  position: relative;
 }
 
-/* Footer */
-.footer{
-  background:#171717!important;
-  color:#ddd!important;
-}
-.footer a{
-  color:#ddd!important;
-}
-.footer a:hover{
-  color:#fff!important;
-}
-
-/* Images */
-.media img{
-  transition:transform .6s ease;
-}
-.card:hover img,
-.banner:hover img{
-  transform:scale(1.05);
+/* subtle underline-on-hover instead of Dawn's default background highlight —
+   quieter, more in line with luxury site conventions */
+.header__inline-menu .header__menu-item span::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
 }
 
-/* Sections */
-.shopify-section{
-  padding-top:4rem;
-  padding-bottom:4rem;
+.header__inline-menu .header__menu-item:hover span::after {
+  transform: scaleX(1);
 }
 
-/* Grid */
-.grid{
-  gap:2rem!important;
+@media screen and (min-width: 750px) {
+  .header {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
 }
 
-/* Desktop */
-@media(min-width:990px){
-.page-width{
-  max-width:1500px!important;
-}
-.banner__content{
-  padding:6rem!important;
-}
+/* Logo — let it use the heading serif rather than Dawn's body font default */
+.header__heading-logo,
+.header__heading-link {
+  font-family: var(--font-heading-family);
+  letter-spacing: 0.02em;
 }
 
-/* Mobile */
-@media(max-width:749px){
-.banner__heading{
-font-size:2.5rem!important;
-}
-.banner__box{
-padding:2rem!important;
-}
-.button{
-width:100%;
-}
-.header{
-padding:0 1rem;
-}
+/* ---- PRODUCT IMAGE NORMALIZATION ----------------------------------------
+   Fixes inconsistent product photography (mismatched backgrounds, lighting,
+   crops) by forcing every image onto the same neutral card background and
+   using object-fit: contain instead of cover — so the ORIGINAL photo
+   background stops competing with neighboring photos. This is a stopgap:
+   it can't fix bad lighting, but it stops the grid from looking like five
+   different sellers' photos stitched together. */
+
+.card__media,
+.card__inner .media {
+  background-color: #f4f1ec;   /* same bone tone as --color-base-background-2 */
 }
 
-/* Decorative */
-.section-heading::after{
-content:"";
-display:block;
-width:70px;
-height:2px;
-background:var(--lux-gold);
-margin:1rem auto 0;
+.card__media img,
+.card__inner .media img {
+  object-fit: contain !important;   /* stop cropping — show the whole product, centered */
+  padding: 6%;                       /* breathing room so products don't touch card edges */
+  box-sizing: border-box;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar{width:10px}
-::-webkit-scrollbar-thumb{
-background:var(--lux-brown);
+/* Subtle 1px border ties each card together as a consistent "frame" —
+   reinforces the catalog feel even when photo content varies */
+.card__media {
+  border: 1px solid rgba(var(--color-base-text), 0.08);
 }
 
+/* ---- UNIFORM CARD HEIGHT (safe version) ---------------------------------
+   Dawn sizes each card using an invisible ::before element with
+   padding-bottom set to a percentage matching that photo's real
+   dimensions (--ratio-percent, set inline per-image). Both the image AND
+   the badge share this same box, which is why overriding aspect-ratio on
+   .card__media directly (a different element) knocked them out of sync
+   earlier. This version overrides the SAME box Dawn already uses, so
+   nothing can fall out of sync. */
 
-/* Extension block 1: add project-specific overrides here */
-/* Extension block 2: add project-specific overrides here */
-/* Extension block 3: add project-specific overrides here */
-/* Extension block 4: add project-specific overrides here */
-/* Extension block 5: add project-specific overrides here */
-/* Extension block 6: add project-specific overrides here */
-/* Extension block 7: add project-specific overrides here */
-/* Extension block 8: add project-specific overrides here */
-/* Extension block 9: add project-specific overrides here */
-/* Extension block 10: add project-specific overrides here */
-/* Extension block 11: add project-specific overrides here */
-/* Extension block 12: add project-specific overrides here */
-/* Extension block 13: add project-specific overrides here */
-/* Extension block 14: add project-specific overrides here */
-/* Extension block 15: add project-specific overrides here */
-/* Extension block 16: add project-specific overrides here */
-/* Extension block 17: add project-specific overrides here */
-/* Extension block 18: add project-specific overrides here */
-/* Extension block 19: add project-specific overrides here */
-/* Extension block 20: add project-specific overrides here */
-/* Extension block 21: add project-specific overrides here */
-/* Extension block 22: add project-specific overrides here */
-/* Extension block 23: add project-specific overrides here */
-/* Extension block 24: add project-specific overrides here */
-/* Extension block 25: add project-specific overrides here */
-/* Extension block 26: add project-specific overrides here */
-/* Extension block 27: add project-specific overrides here */
-/* Extension block 28: add project-specific overrides here */
-/* Extension block 29: add project-specific overrides here */
-/* Extension block 30: add project-specific overrides here */
-/* Extension block 31: add project-specific overrides here */
-/* Extension block 32: add project-specific overrides here */
-/* Extension block 33: add project-specific overrides here */
-/* Extension block 34: add project-specific overrides here */
-/* Extension block 35: add project-specific overrides here */
-/* Extension block 36: add project-specific overrides here */
-/* Extension block 37: add project-specific overrides here */
-/* Extension block 38: add project-specific overrides here */
-/* Extension block 39: add project-specific overrides here */
-/* Extension block 40: add project-specific overrides here */
-/* Extension block 41: add project-specific overrides here */
-/* Extension block 42: add project-specific overrides here */
-/* Extension block 43: add project-specific overrides here */
-/* Extension block 44: add project-specific overrides here */
-/* Extension block 45: add project-specific overrides here */
-/* Extension block 46: add project-specific overrides here */
-/* Extension block 47: add project-specific overrides here */
-/* Extension block 48: add project-specific overrides here */
-/* Extension block 49: add project-specific overrides here */
-/* Extension block 50: add project-specific overrides here */
-/* Extension block 51: add project-specific overrides here */
-/* Extension block 52: add project-specific overrides here */
-/* Extension block 53: add project-specific overrides here */
-/* Extension block 54: add project-specific overrides here */
-/* Extension block 55: add project-specific overrides here */
-/* Extension block 56: add project-specific overrides here */
-/* Extension block 57: add project-specific overrides here */
-/* Extension block 58: add project-specific overrides here */
-/* Extension block 59: add project-specific overrides here */
-/* Extension block 60: add project-specific overrides here */
-/* Extension block 61: add project-specific overrides here */
-/* Extension block 62: add project-specific overrides here */
-/* Extension block 63: add project-specific overrides here */
-/* Extension block 64: add project-specific overrides here */
-/* Extension block 65: add project-specific overrides here */
-/* Extension block 66: add project-specific overrides here */
-/* Extension block 67: add project-specific overrides here */
-/* Extension block 68: add project-specific overrides here */
-/* Extension block 69: add project-specific overrides here */
-/* Extension block 70: add project-specific overrides here */
-/* Extension block 71: add project-specific overrides here */
-/* Extension block 72: add project-specific overrides here */
-/* Extension block 73: add project-specific overrides here */
-/* Extension block 74: add project-specific overrides here */
-/* Extension block 75: add project-specific overrides here */
-/* Extension block 76: add project-specific overrides here */
-/* Extension block 77: add project-specific overrides here */
-/* Extension block 78: add project-specific overrides here */
-/* Extension block 79: add project-specific overrides here */
-/* Extension block 80: add project-specific overrides here */
-/* Extension block 81: add project-specific overrides here */
-/* Extension block 82: add project-specific overrides here */
-/* Extension block 83: add project-specific overrides here */
-/* Extension block 84: add project-specific overrides here */
-/* Extension block 85: add project-specific overrides here */
-/* Extension block 86: add project-specific overrides here */
-/* Extension block 87: add project-specific overrides here */
-/* Extension block 88: add project-specific overrides here */
-/* Extension block 89: add project-specific overrides here */
-/* Extension block 90: add project-specific overrides here */
-/* Extension block 91: add project-specific overrides here */
-/* Extension block 92: add project-specific overrides here */
-/* Extension block 93: add project-specific overrides here */
-/* Extension block 94: add project-specific overrides here */
-/* Extension block 95: add project-specific overrides here */
-/* Extension block 96: add project-specific overrides here */
-/* Extension block 97: add project-specific overrides here */
-/* Extension block 98: add project-specific overrides here */
-/* Extension block 99: add project-specific overrides here */
-/* Extension block 100: add project-specific overrides here */
-/* Extension block 101: add project-specific overrides here */
-/* Extension block 102: add project-specific overrides here */
-/* Extension block 103: add project-specific overrides here */
-/* Extension block 104: add project-specific overrides here */
-/* Extension block 105: add project-specific overrides here */
-/* Extension block 106: add project-specific overrides here */
-/* Extension block 107: add project-specific overrides here */
-/* Extension block 108: add project-specific overrides here */
-/* Extension block 109: add project-specific overrides here */
-/* Extension block 110: add project-specific overrides here */
-/* Extension block 111: add project-specific overrides here */
-/* Extension block 112: add project-specific overrides here */
-/* Extension block 113: add project-specific overrides here */
-/* Extension block 114: add project-specific overrides here */
-/* Extension block 115: add project-specific overrides here */
-/* Extension block 116: add project-specific overrides here */
-/* Extension block 117: add project-specific overrides here */
-/* Extension block 118: add project-specific overrides here */
-/* Extension block 119: add project-specific overrides here */
-/* Extension block 120: add project-specific overrides here */
-/* Extension block 121: add project-specific overrides here */
-/* Extension block 122: add project-specific overrides here */
-/* Extension block 123: add project-specific overrides here */
-/* Extension block 124: add project-specific overrides here */
-/* Extension block 125: add project-specific overrides here */
-/* Extension block 126: add project-specific overrides here */
-/* Extension block 127: add project-specific overrides here */
-/* Extension block 128: add project-specific overrides here */
-/* Extension block 129: add project-specific overrides here */
-/* Extension block 130: add project-specific overrides here */
-/* Extension block 131: add project-specific overrides here */
-/* Extension block 132: add project-specific overrides here */
-/* Extension block 133: add project-specific overrides here */
-/* Extension block 134: add project-specific overrides here */
-/* Extension block 135: add project-specific overrides here */
-/* Extension block 136: add project-specific overrides here */
-/* Extension block 137: add project-specific overrides here */
-/* Extension block 138: add project-specific overrides here */
-/* Extension block 139: add project-specific overrides here */
-/* Extension block 140: add project-specific overrides here */
-/* Extension block 141: add project-specific overrides here */
-/* Extension block 142: add project-specific overrides here */
-/* Extension block 143: add project-specific overrides here */
-/* Extension block 144: add project-specific overrides here */
-/* Extension block 145: add project-specific overrides here */
-/* Extension block 146: add project-specific overrides here */
-/* Extension block 147: add project-specific overrides here */
-/* Extension block 148: add project-specific overrides here */
-/* Extension block 149: add project-specific overrides here */
-/* Extension block 150: add project-specific overrides here */
-/* Extension block 151: add project-specific overrides here */
-/* Extension block 152: add project-specific overrides here */
-/* Extension block 153: add project-specific overrides here */
-/* Extension block 154: add project-specific overrides here */
-/* Extension block 155: add project-specific overrides here */
-/* Extension block 156: add project-specific overrides here */
-/* Extension block 157: add project-specific overrides here */
-/* Extension block 158: add project-specific overrides here */
-/* Extension block 159: add project-specific overrides here */
-/* Extension block 160: add project-specific overrides here */
-/* Extension block 161: add project-specific overrides here */
-/* Extension block 162: add project-specific overrides here */
-/* Extension block 163: add project-specific overrides here */
-/* Extension block 164: add project-specific overrides here */
-/* Extension block 165: add project-specific overrides here */
-/* Extension block 166: add project-specific overrides here */
-/* Extension block 167: add project-specific overrides here */
-/* Extension block 168: add project-specific overrides here */
-/* Extension block 169: add project-specific overrides here */
-/* Extension block 170: add project-specific overrides here */
-/* Extension block 171: add project-specific overrides here */
-/* Extension block 172: add project-specific overrides here */
-/* Extension block 173: add project-specific overrides here */
-/* Extension block 174: add project-specific overrides here */
-/* Extension block 175: add project-specific overrides here */
-/* Extension block 176: add project-specific overrides here */
-/* Extension block 177: add project-specific overrides here */
-/* Extension block 178: add project-specific overrides here */
-/* Extension block 179: add project-specific overrides here */
-/* Extension block 180: add project-specific overrides here */
-/* Extension block 181: add project-specific overrides here */
-/* Extension block 182: add project-specific overrides here */
-/* Extension block 183: add project-specific overrides here */
-/* Extension block 184: add project-specific overrides here */
-/* Extension block 185: add project-specific overrides here */
-/* Extension block 186: add project-specific overrides here */
-/* Extension block 187: add project-specific overrides here */
-/* Extension block 188: add project-specific overrides here */
-/* Extension block 189: add project-specific overrides here */
-/* Extension block 190: add project-specific overrides here */
-/* Extension block 191: add project-specific overrides here */
-/* Extension block 192: add project-specific overrides here */
-/* Extension block 193: add project-specific overrides here */
-/* Extension block 194: add project-specific overrides here */
-/* Extension block 195: add project-specific overrides here */
-/* Extension block 196: add project-specific overrides here */
-/* Extension block 197: add project-specific overrides here */
-/* Extension block 198: add project-specific overrides here */
-/* Extension block 199: add project-specific overrides here */
-/* Extension block 200: add project-specific overrides here */
-/* Extension block 201: add project-specific overrides here */
-/* Extension block 202: add project-specific overrides here */
-/* Extension block 203: add project-specific overrides here */
-/* Extension block 204: add project-specific overrides here */
-/* Extension block 205: add project-specific overrides here */
-/* Extension block 206: add project-specific overrides here */
-/* Extension block 207: add project-specific overrides here */
-/* Extension block 208: add project-specific overrides here */
-/* Extension block 209: add project-specific overrides here */
-/* Extension block 210: add project-specific overrides here */
-/* Extension block 211: add project-specific overrides here */
-/* Extension block 212: add project-specific overrides here */
-/* Extension block 213: add project-specific overrides here */
-/* Extension block 214: add project-specific overrides here */
-/* Extension block 215: add project-specific overrides here */
-/* Extension block 216: add project-specific overrides here */
-/* Extension block 217: add project-specific overrides here */
-/* Extension block 218: add project-specific overrides here */
-/* Extension block 219: add project-specific overrides here */
-/* Extension block 220: add project-specific overrides here */
-/* Extension block 221: add project-specific overrides here */
-/* Extension block 222: add project-specific overrides here */
-/* Extension block 223: add project-specific overrides here */
-/* Extension block 224: add project-specific overrides here */
-/* Extension block 225: add project-specific overrides here */
-/* Extension block 226: add project-specific overrides here */
-/* Extension block 227: add project-specific overrides here */
-/* Extension block 228: add project-specific overrides here */
-/* Extension block 229: add project-specific overrides here */
-/* Extension block 230: add project-specific overrides here */
-/* Extension block 231: add project-specific overrides here */
-/* Extension block 232: add project-specific overrides here */
-/* Extension block 233: add project-specific overrides here */
-/* Extension block 234: add project-specific overrides here */
-/* Extension block 235: add project-specific overrides here */
-/* Extension block 236: add project-specific overrides here */
-/* Extension block 237: add project-specific overrides here */
-/* Extension block 238: add project-specific overrides here */
-/* Extension block 239: add project-specific overrides here */
-/* Extension block 240: add project-specific overrides here */
-/* Extension block 241: add project-specific overrides here */
-/* Extension block 242: add project-specific overrides here */
-/* Extension block 243: add project-specific overrides here */
-/* Extension block 244: add project-specific overrides here */
-/* Extension block 245: add project-specific overrides here */
-/* Extension block 246: add project-specific overrides here */
-/* Extension block 247: add project-specific overrides here */
-/* Extension block 248: add project-specific overrides here */
-/* Extension block 249: add project-specific overrides here */
-/* Extension block 250: add project-specific overrides here */
-/* Extension block 251: add project-specific overrides here */
-/* Extension block 252: add project-specific overrides here */
-/* Extension block 253: add project-specific overrides here */
-/* Extension block 254: add project-specific overrides here */
-/* Extension block 255: add project-specific overrides here */
-/* Extension block 256: add project-specific overrides here */
-/* Extension block 257: add project-specific overrides here */
-/* Extension block 258: add project-specific overrides here */
-/* Extension block 259: add project-specific overrides here */
-/* Extension block 260: add project-specific overrides here */
-/* Extension block 261: add project-specific overrides here */
-/* Extension block 262: add project-specific overrides here */
-/* Extension block 263: add project-specific overrides here */
-/* Extension block 264: add project-specific overrides here */
-/* Extension block 265: add project-specific overrides here */
-/* Extension block 266: add project-specific overrides here */
-/* Extension block 267: add project-specific overrides here */
-/* Extension block 268: add project-specific overrides here */
-/* Extension block 269: add project-specific overrides here */
-/* Extension block 270: add project-specific overrides here */
-/* Extension block 271: add project-specific overrides here */
-/* Extension block 272: add project-specific overrides here */
-/* Extension block 273: add project-specific overrides here */
-/* Extension block 274: add project-specific overrides here */
-/* Extension block 275: add project-specific overrides here */
-/* Extension block 276: add project-specific overrides here */
-/* Extension block 277: add project-specific overrides here */
-/* Extension block 278: add project-specific overrides here */
-/* Extension block 279: add project-specific overrides here */
-/* Extension block 280: add project-specific overrides here */
-/* Extension block 281: add project-specific overrides here */
-/* Extension block 282: add project-specific overrides here */
-/* Extension block 283: add project-specific overrides here */
-/* Extension block 284: add project-specific overrides here */
-/* Extension block 285: add project-specific overrides here */
-/* Extension block 286: add project-specific overrides here */
-/* Extension block 287: add project-specific overrides here */
-/* Extension block 288: add project-specific overrides here */
-/* Extension block 289: add project-specific overrides here */
-/* Extension block 290: add project-specific overrides here */
-/* Extension block 291: add project-specific overrides here */
-/* Extension block 292: add project-specific overrides here */
-/* Extension block 293: add project-specific overrides here */
-/* Extension block 294: add project-specific overrides here */
-/* Extension block 295: add project-specific overrides here */
-/* Extension block 296: add project-specific overrides here */
-/* Extension block 297: add project-specific overrides here */
-/* Extension block 298: add project-specific overrides here */
-/* Extension block 299: add project-specific overrides here */
-/* Extension block 300: add project-specific overrides here */
+.card__inner.ratio::before {
+  padding-bottom: 125% !important;   /* 4:5 ratio — adjust this single number to change card height */
+}
+
+/* ---- PRODUCT DETAIL PAGE -------------------------------------------------- */
+
+/* Product title — match the serif heading treatment used everywhere else */
+.product__title h1 {
+  font-family: var(--font-heading-family);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+/* Price — quieter, not bold; sale price in the leather-brown accent */
+.product .price {
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+
+.product .price--on-sale .price-item--sale {
+  color: rgb(var(--color-base-accent-1, var(--color-foreground)));
+}
+
+/* Product media gallery — same neutral background + contain treatment as
+   the collection grid, so the product page feels consistent with the
+   cards someone just clicked through from */
+.product__media {
+  background-color: #f4f1ec;
+}
+
+/* Variant pills (size/color selectors) — sharp corners, tracked labels,
+   quieter default state, solid fill on selected state */
+variant-pills .product-form__input .button,
+.product-form__input input[type="radio"] + label,
+.product-form__input--pill input[type="radio"] + label {
+  border-radius: 0 !important;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.8rem;
+  font-weight: 500;
+  min-width: 3.5rem;
+}
+
+/* Section labels above variant pickers ("Size", "Color") — tracked caps
+   to match the eyebrow treatment used elsewhere */
+.product-form__input .form__label {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(var(--color-foreground), 0.6);
+}
+
+/* Quantity selector + Add to cart row — align spacing/sizing with the
+   button treatment used sitewide */
+.product-form__buttons .button {
+  padding-top: 1.4rem;
+  padding-bottom: 1.4rem;
+}
+
+.quantity {
+  border-radius: 0;
+  border-color: rgba(var(--color-foreground), 0.15);
+}
+
+/* Accordion (product description, shipping info, etc.) — quieter dividers,
+   heading style matches the tracked-caps label treatment */
+.product__accordion .accordion__title {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.product__accordion {
+  border-color: rgba(var(--color-foreground), 0.1);
+}
+
+/* Product description body copy — same relaxed line-height as the rest
+   of the site for readability */
+.product__description {
+  line-height: 1.7;
+  color: rgba(var(--color-foreground), 0.8);
+}
+
+/* ---- COLLECTION / CATALOG PAGE -------------------------------------------- */
+
+/* Collection banner title (top of the collection page) */
+.collection-hero__title,
+.collection__title h1 {
+  font-family: var(--font-heading-family);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Sort-by and filter labels — tracked uppercase caps, consistent with
+   the rest of the site's label treatment */
+.facets__label,
+.facet-filters__label,
+summary.facets__summary {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+/* Sort dropdown + filter pills — sharp corners, no rounded default */
+.facets__sort,
+.facet-filters__field select,
+.facets__disclosure .button {
+  border-radius: 0;
+}
+
+/* Active filter pills */
+.active-facets__button {
+  border-radius: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.75rem;
+}
+
+/* Results count text — quieter, smaller, sits well against tracked labels */
+.facets__filters-container .facets__count,
+.product-count {
+  font-size: 0.85rem;
+  color: rgba(var(--color-foreground), 0.6);
+  letter-spacing: 0.02em;
+}
+
+/* Collection grid — reuse the same wider gutters as the homepage grid,
+   Dawn sometimes applies a tighter default specifically on collection
+   pages so this reinforces consistency */
+.collection .grid {
+  --grid-desktop-horizontal-spacing: 32px;
+  --grid-desktop-vertical-spacing: 48px;
+}
+
+/* ---- BUTTON TEXT COLOR FIX -----------------------------------------------
+   Browsers apply their own "visited link" purple/blue to <a> tags by
+   default, which can override a button's intended text color once that
+   link has been clicked before (e.g. "View all"). Lock the color
+   explicitly so buttons never shift color after a click. */
+
+.button,
+a.button,
+.button:visited,
+a.button:visited {
+  color: rgb(var(--color-button-text)) !important;
+}
+
+.button--secondary,
+a.button--secondary,
+.button--secondary:visited {
+  color: rgb(var(--color-secondary-button-text, var(--color-button-text))) !important;
+}
