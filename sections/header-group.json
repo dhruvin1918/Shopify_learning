@@ -37,6 +37,10 @@
     },
     "header": {
       "type": "header",
+      "custom_css": [
+        ".menu-list__link {color: var(--menu-top-level-font-color) !important; opacity: 1 !important;}",
+        ".menu-list__link:hover,.menu-list__link:focus,.menu-list__link--active {color: var(--menu-top-level-font-color) !important; opacity: 1 !important;}"
+      ],
       "settings": {
         "logo_position": "middle-left",
         "mobile_logo_position": "center",
