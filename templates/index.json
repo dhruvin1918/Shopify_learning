@@ -19,9 +19,9 @@
         "text": "<p><br/>Discover handcrafted leather footwear<br/>designed for timeless elegance.</p>",
         "text_alignment": "left",
         "button_label": "SHOP COLLECTION",
-        "button_link": "",
+        "button_link": "shopify://collections/all",
         "button2_label": "OUR STORY",
-        "button2_link": ""
+        "button2_link": "shopify://pages/our-story"
       }
     },
     "craftsmanship_9Em9Wy": {
