@@ -45,9 +45,9 @@
       "settings": {
         "collection": "all",
         "products_to_show": 8,
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
+        "title": "THE PFX COLLECTION",
+        "heading_size": "h1",
+        "description": "<p>A curated selection of timeless footwear, crafted with premium materials and designed for every occasion.</p>",
         "show_description": false,
         "description_style": "body",
         "columns_desktop": 4,
